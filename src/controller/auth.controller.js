@@ -4,6 +4,7 @@ import AuthRepository from '../repository/auth.repository.js';
 class _AuthController extends BaseController {
   async register(req, res, next) {
     try {
+      console.log('req.body', req.body);
       const user = await AuthRepository.register(req.body);
       this.success(req, res)(user);
     } catch (e) {

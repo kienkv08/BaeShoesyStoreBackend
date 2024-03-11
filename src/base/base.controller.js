@@ -15,8 +15,11 @@ class BaseController extends BaseClass {
   success(req, res) {
     return (data, message) => {
       const finalMessage = message || this.defaultSuccessMsg;
-      const finalData = data ? { data } : { data: null };
+      console.log('data', data);
+      const finalData = data ? { ...data } : {};
+      console.log('finalData', finalData);
       const responsePayload = new ResponsePayload(200, finalMessage, finalData);
+      console.log('responsePayload', responsePayload);
       res.status(200).send(responsePayload);
     };
   }

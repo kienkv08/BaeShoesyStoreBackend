@@ -1,5 +1,7 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 import bcrypt from 'bcrypt';
+import Product from './product.model.js';
+import config from '../config/common.config.js';
 
 const userSchema = new mongoose.Schema(
   {
@@ -8,15 +10,7 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    lastName: {
-      type: String,
-      required: false,
-    },
-    firstName: {
-      type: String,
-      required: false,
-    },
-    name: {
+    fullname: {
       type: String,
       required: false,
     },
@@ -26,8 +20,6 @@ const userSchema = new mongoose.Schema(
     },
     email: {
       type: String,
-      required: true,
-      unique: true,
     },
     password: {
       type: String,
@@ -35,12 +27,20 @@ const userSchema = new mongoose.Schema(
     },
     avatar: {
       type: String,
-      default: 'DEFAULT_AVATAR',
+      default: config.DEFAULT_AVARTAR,
     },
     role: {
       type: Number,
       required: false,
       default: 2,
+    },
+    address: {
+      type: String,
+      required: false,
+    },
+    gender: {
+      type: Boolean,
+      required: false,
     },
     deletedAt: {
       type: Date,
@@ -48,8 +48,16 @@ const userSchema = new mongoose.Schema(
     },
     status: {
       type: Boolean,
-      default: false,
+      default: true,
     },
+    products: [
+      {
+        _id: {
+          type: Schema.Types.ObjectId,
+          ref: 'Product',
+        },
+      },
+    ],
   },
   {
     timestamps: true,

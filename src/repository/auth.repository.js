@@ -11,28 +11,23 @@ class _AuthRepository extends BaseRepository {
 
   async register(userDetails) {
     try {
-      // Check if the username or email is already taken
       const existingUser = await this.findOne({
         $or: [{ username: userDetails.username }, { email: userDetails.email }],
       });
-
       if (existingUser) {
         throw new AppError('Username or email already exists');
       }
-
-      // Hash the password before saving it to the database
-
-      // Create a new user object with the hashed password
+      if (userDetails.role) {
+        throw new AppError('Not allow to set role');
+      }
       const newUser = {
         ...userDetails,
       };
-
-      // Save the user to the database
       const createdUser = await this.create(newUser);
-
-      return createdUser;
+      const { password: dummy, ...rest } = createdUser.toObject();
+      return { ...rest };
     } catch (error) {
-      throw error;
+      throw new AppError(error);
     }
   }
   async login({ username, password }) {

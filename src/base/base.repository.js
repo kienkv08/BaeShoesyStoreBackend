@@ -35,7 +35,7 @@ class BaseRepository {
 
   async findOne(filterQuery, populate = []) {
     const query = { ...filterQuery, deletedAt: null };
-    return await this._addPopulate(this.model.findOne(query), populate);
+    return (await this._addPopulate(this.model.findOne(query), populate)).toObject();
   }
 
   async findById(id, populate = []) {
@@ -43,7 +43,7 @@ class BaseRepository {
       _id: id,
       deletedAt: null,
     };
-    return await this._addPopulate(this.model.findOne(query), populate);
+    return (await this._addPopulate(this.model.findOne(query), populate)).toObject();
   }
 
   async findByIds(ids, populate = []) {
@@ -56,7 +56,7 @@ class BaseRepository {
 
   async paginate(params) {
     const { pagination, populates, searchBy = [] } = params;
-    const { size, page, sortBy = 'createdAt', sortType = 'desc', text, ...rest } = pagination;
+    const { size, page, sortBy = 'createdAt', sortType = 'desc', text, isDelete, ...rest } = pagination;
     const conditions = { ...rest };
 
     if (text && searchBy.length > 0) {
@@ -64,7 +64,6 @@ class BaseRepository {
         !isNaN(Number(text)) ? { [key]: Number(text) } : { [key]: { $regex: new RegExp(text.toString(), 'i') } },
       );
     }
-
     Object.keys(rest).length > 0 &&
       Object.keys(rest).forEach((key) => {
         conditions[key] = Array.isArray(rest[key]) ? { $in: rest[key] } : rest[key];
@@ -78,10 +77,11 @@ class BaseRepository {
         .limit(Number(size))
         .sort({ [sortBy]: sortType === 'desc' ? -1 : 1 }),
       populates,
+      isDelete,
     );
 
     const [data, total] = await Promise.all([query, this.model.countDocuments(conditions)]);
-    return [data, total];
+    return { data, total: total, currentPage: page, size };
   }
 
   async create(payload, session) {

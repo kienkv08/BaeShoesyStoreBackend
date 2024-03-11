@@ -10,5 +10,6 @@ const config = {
   ACCESS_TOKEN: process.env.ACCESS_TOKEN,
   REFRESH_TOKEN: process.env.REFRESH_TOKEN,
   MONGO_CONNECT: process.env.MONGO_CONNECT,
+  DEFAULT_AVARTAR: 'https://res.cloudinary.com/dfesaohnt/image/upload/v1702835877/users/avatar.png',
 };
 export default config;
