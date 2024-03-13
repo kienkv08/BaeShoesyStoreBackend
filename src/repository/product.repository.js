@@ -11,7 +11,6 @@ class ProductRepo extends BaseRepository {
   async createProduct(data) {
     try {
       const createdProduct = await this.create(data);
-      console.log('createdProduct', createdProduct.toObject());
       return createdProduct.toObject();
     } catch (error) {
       throw new AppError(error);
@@ -22,7 +21,7 @@ class ProductRepo extends BaseRepository {
     return products;
   }
   async getOneProductById(id) {
-    const product = this.findById(id, ['category']);
+    const product = this.findById(id, ['category', 'created_by']);
     if (!product) throw new AppError('Not found!');
     return product;
   }

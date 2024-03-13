@@ -63,6 +63,14 @@ const Product = mongoose.model(
         type: Number,
         require: true,
       },
+      maxPrice: {
+        type: Number,
+        default: 0,
+      },
+      created_by: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+      },
     },
     {
       timestamps: true,

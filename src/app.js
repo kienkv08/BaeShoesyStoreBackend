@@ -32,7 +32,6 @@ app.use(BASE_URL, v1Router);
 routes(v1Router);
 
 app.use((err, req, res, next) => {
-  console.log(err);
   if (err instanceof AppError) {
     handleAppError(req, res)(err);
   } else {

@@ -35,7 +35,7 @@ class BaseRepository {
 
   async findOne(filterQuery, populate = []) {
     const query = { ...filterQuery, deletedAt: null };
-    return (await this._addPopulate(this.model.findOne(query), populate)).toObject();
+    return await this._addPopulate(this.model.findOne(query), populate);
   }
 
   async findById(id, populate = []) {

@@ -32,6 +32,7 @@ class _AuthRepository extends BaseRepository {
   }
   async login({ username, password }) {
     const user = await this.findOne({ username });
+    console.log('user', user);
     const isMatch = user && (await user.isValidPassword(password));
     if (!user || !isMatch) {
       throw new AppError('Login fail');

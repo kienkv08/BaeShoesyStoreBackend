@@ -21,7 +21,6 @@ class ProductControll extends BaseController {
         ...rest,
         images: listImage,
       };
-      console.log('data', data);
       const result = await ProductRepository.createProduct(data);
       this.success(req, res)(result);
     } catch (error) {
