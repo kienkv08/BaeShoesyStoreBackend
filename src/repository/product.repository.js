@@ -1,8 +1,7 @@
 import BaseRepository from '../base/base.repository.js';
 import { AppError } from '../models/error.model.js';
 import Product from '../models/product.model.js';
-import Category from '../models/category.model.js';
-import Image from '../models/image.model.js';
+
 
 class ProductRepo extends BaseRepository {
   constructor() {
