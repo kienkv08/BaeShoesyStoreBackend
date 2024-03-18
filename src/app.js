@@ -20,7 +20,7 @@ app.use(
     limit: Config.LIMIT_REQUEST_BODY,
   }),
 );
-app.use(cors({ credentials: true, origin: Config.CLIENT_URL }));
+app.use(cors({ credentials: true, preflightContinue: true }));
 app.use(cookieParser());
 
 const v1Router = express.Router();
@@ -29,6 +29,7 @@ v1Router.use(cookieParser());
 v1Router.use(express.json());
 v1Router.use(bodyParser.urlencoded({ extended: false }));
 app.use(BASE_URL, v1Router);
+
 routes(v1Router);
 
 app.use((err, req, res, next) => {

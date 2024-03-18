@@ -15,6 +15,27 @@ class _UserRepository extends BaseRepository {
       throw new AppError(error);
     }
   }
+  async findUserById(data) {
+    try {
+      const { id } = data;
+      const res = await this.findById(id);
+      const { password: dummy, ...rest } = res;
+      return { user: rest };
+    } catch (e) {
+      throw new AppError(e);
+    }
+  }
+
+  async updateUser(id, data) {
+    try {
+      const res = (await this.update(id, data)).toObject();
+      console.log('res', res);
+      const { password: dummy, ...rest } = res;
+      return { user: rest };
+    } catch (e) {
+      throw new AppError(e);
+    }
+  }
 }
 const UserRepository = new _UserRepository();
 export default UserRepository;
