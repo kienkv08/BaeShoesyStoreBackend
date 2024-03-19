@@ -1,6 +1,7 @@
 import mongoose, { Schema } from 'mongoose';
-import Post from './post.model.js';
+import Product from './product.model.js';
 import Order from './order.model.js';
+import User from './user.model.js';
 
 const Transaction = mongoose.model(
   'Transaction',
@@ -14,21 +15,17 @@ const Transaction = mongoose.model(
         type: Date,
         default: null,
       },
-      post: {
+      product: {
         type: Schema.Types.ObjectId,
-        ref: 'Post',
+        ref: 'Product',
       },
       order: {
         type: Schema.Types.ObjectId,
         ref: 'Order',
       },
-      createdAt: {
-        type: Number,
-        default: Date.now,
-      },
-      updatedAt: {
-        type: Number,
-        default: Date.now,
+      userId: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
       },
     },
     {
