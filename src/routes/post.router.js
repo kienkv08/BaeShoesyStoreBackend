@@ -1,18 +1,10 @@
+import express from 'express';
+import PostController from '../controller/post.controller.js';
+import { authenticateJwt } from '../middlewares/jwt.middleware.js';
 
-const express = require('express');
-const router = express.Router();
-const Post = require('../models/Post');
+const postRouter = express.Router();
+// postRouter.post('/create', authenticateJwt, PostController.createPost);
+postRouter.post('/', PostController.getPosts);
+postRouter.get('/:id', PostController.getPostById);
 
-// Update a post
-router.put('/:postId', async (req, res) => {
-    try {
-        const updatedPost = await Post.findByIdAndUpdate(req.params.postId, req.body, { new: true });
-        res.json(updatedPost);
-    } catch (err) {
-        res.status(400).json({ message: err.message });
-    }
-});
-// Delete a post
-
-
-module.exports = router; 
+export default postRouter;

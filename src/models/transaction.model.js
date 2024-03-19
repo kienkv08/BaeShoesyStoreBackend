@@ -22,6 +22,14 @@ const Transaction = mongoose.model(
         type: Schema.Types.ObjectId,
         ref: 'Order',
       },
+      createdAt: {
+        type: Number,
+        default: Date.now,
+      },
+      updatedAt: {
+        type: Number,
+        default: Date.now,
+      },
     },
     {
       timestamps: true,

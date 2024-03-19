@@ -15,12 +15,21 @@ class TransactionRepo extends BaseRepository {
             throw new AppError(error);
         }
     }
-    async getTransactions(params) {
-        const transactions = await this.paginate(params);
-        return transactions;
+    async getTransactions() {
+        try {
+            const users = await this.paginate({
+                pagination: {
+                    size: 100000,
+                    page: 1,
+                },
+            });
+            return users;
+        } catch (error) {
+            throw new AppError(error);
+        }
     }
     async getOnetransactionById(id) {
-        const transaction = this.findById(id, ['category', 'created_by']);
+        const transaction = this.findById(id, ['order', 'created_by']);
         if (!transaction) throw new AppError('Not found!');
         return transaction;
     }

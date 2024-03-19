@@ -1,12 +1,42 @@
-const mongoose = require('mongoose');
+import mongoose, { Schema } from 'mongoose';
+import Image from './image.model.js';
 
-const postSchema = new mongoose.Schema({
-    title: String,
-    description: String,
-    price: Number,
-    imageUrl: String,
-});
+const Post = mongoose.model(
+    'Post',
+    new mongoose.Schema(
+        {
+            title: {
+                type: String,
+                required: true,
+            },
+            description: {
+                type: String,
+                required: true,
+            },
+            price: {
+                type: Number,
+            },
+            images: [
+                {
+                    _id: {
+                        type: Schema.Types.ObjectId,
+                        ref: 'Image',
+                    },
+                    url: {
+                        type: String,
+                    },
+                },
+            ],
+            product: {
+                type: Schema.Types.ObjectId,
+                ref: 'Product',
+                required: true,
+            },
+        },
+        {
+            timestamps: true,
+        },
+    ),
+);
 
-const Post = mongoose.model('Post', postSchema);
-
-module.exports = Post;
+export default Post;
