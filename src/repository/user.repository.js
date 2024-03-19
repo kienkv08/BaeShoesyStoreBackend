@@ -28,6 +28,13 @@ class _UserRepository extends BaseRepository {
 
   async updateUser(id, data) {
     try {
+      const { amount } = data;
+      const user = await this.findById(id);
+      if (amount && user) {
+        console.log('zo day', amount);
+        console.log('zo day', user);
+        data.bag = user.bag + parseFloat(amount);
+      }
       const res = (await this.update(id, data)).toObject();
       console.log('res', res);
       const { password: dummy, ...rest } = res;

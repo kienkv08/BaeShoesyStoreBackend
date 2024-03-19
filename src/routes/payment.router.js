@@ -1,6 +1,8 @@
 import express from 'express';
 import { payOS } from '../config/payos.config.js';
 import BaseController from '../base/base.controller.js';
+import { authenticateJwt } from '../middlewares/jwt.middleware.js';
+import RechargeController from '../controller/rechargeHistory.controller.js';
 
 const paymentRouter = express.Router();
 
@@ -26,5 +28,7 @@ paymentRouter.post('/create-payment-link', async (req, res) => {
     res.send('Something went error');
   }
 });
+
+paymentRouter.post('/create', authenticateJwt, RechargeController.create);
 
 export default paymentRouter;

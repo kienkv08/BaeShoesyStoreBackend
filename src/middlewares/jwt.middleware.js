@@ -24,11 +24,9 @@ const checkTokenExpired = (req, res, next) => {
 
 const authenticateJwt = (req, res, next) => {
   const authHeader = req.headers['authorization'];
-  console.log('authHeader', authHeader);
 
   if (authHeader) {
     const token = authHeader.split(/\s+/)[1];
-    console.log('token', token);
     jwt.verify(token, config.ACCESS_TOKEN || '', (err, user) => {
       if (err) {
         return handleUnauthorized(req, res);

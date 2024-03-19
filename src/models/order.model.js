@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
-import Post from './post.model.js';
+import Product from './product.model.js';
 
 const Order = mongoose.model(
   'Order',
@@ -16,9 +16,9 @@ const Order = mongoose.model(
       address: {
         type: String,
       },
-      post: {
+      productId: {
         type: Schema.Types.ObjectId,
-        ref: 'Post',
+        ref: 'Product',
         required: true,
       },
       status: {

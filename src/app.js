@@ -4,6 +4,8 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
+import { Server } from 'socket.io';
+import http from 'http';
 import { BASE_URL } from './common/constants/global.const.js';
 import routes from './routes/index.router.js';
 import connectDB from './config/mongo.config.js';
@@ -51,6 +53,17 @@ setImmediate(async () => {
       : app.listen(Config.APP_PORT, () => {
           LogService.logInfo('App listening on', `${Config.APP_HOST}`);
         });
+  const io = new Server(server, {
+    cors: {
+      origin: 'http://localhost:3000',
+      methods: ['GET', 'POST'],
+    },
+  });
+  io.on('connection', (socket) => {
+    socket.on('newBid', (data) => {
+      io.emit('newHihestBid', { allow: 'yes' });
+    });
+  });
 
   process.on('SIGTERM', () => {
     LogService.logInfo('SIGTERM signal received: closing HTTP server');

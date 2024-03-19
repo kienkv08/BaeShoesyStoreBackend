@@ -1,3 +1,4 @@
+import auctionHistoryRouter from './auctionHistory.router.js';
 import authRoter from './auth.router.js';
 import cartRouter from './cart.router.js';
 import categoryRouter from './category.router.js';
@@ -14,6 +15,7 @@ const routes = (app) => {
   app.use('/carts', cartRouter);
   app.use('/users', userRouter);
   app.use('/payment', paymentRouter);
+  app.use('/auctions', auctionHistoryRouter);
 };
 
 export default routes;
