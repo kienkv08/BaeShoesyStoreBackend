@@ -40,7 +40,7 @@ const Product = mongoose.model(
         type: String,
       },
       status: {
-        type: Boolean,
+        type: Number,
         default: 0,
       },
       address: {

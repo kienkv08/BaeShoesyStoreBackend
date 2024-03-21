@@ -25,6 +25,13 @@ class ProductRepo extends BaseRepository {
     if (!product) throw new AppError('Not found!');
     return product;
   }
+
+  async updateProduct(id, data) {
+    const { userRouter, ...rest } = data;
+    const product = await this.update(id, rest);
+    if (!product) throw new AppError('Not found!');
+    return product.toObject();
+  }
 }
 const ProductRepository = new ProductRepo();
 export default ProductRepository;

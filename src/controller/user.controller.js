@@ -23,8 +23,6 @@ class _UserController extends BaseController {
   async update(req, res, next) {
     try {
       const { user, ...rest } = req.body;
-      console.log('rest', typeof user);
-      console.log('user', user);
       console.log('rest', rest);
       const users = await UserRepository.updateUser(user._id, rest);
       this.success(req, res)(users);

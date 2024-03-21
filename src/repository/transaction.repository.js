@@ -9,6 +9,7 @@ class TransactionRepo extends BaseRepository {
 
   async createTransaction(data) {
     try {
+      console.log('createTransaction', data);
       const res = await this.create(data);
       return res.toObject();
     } catch (e) {

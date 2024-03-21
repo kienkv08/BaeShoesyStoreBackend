@@ -1,5 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
 import Product from './product.model.js';
+import User from './user.model.js';
 
 const Order = mongoose.model(
   'Order',
@@ -22,12 +23,16 @@ const Order = mongoose.model(
         required: true,
       },
       status: {
-        type: Boolean,
+        type: Number,
         default: 1,
       },
       paymentType: {
         type: String,
         default: 1,
+      },
+      userId: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
       },
     },
     {

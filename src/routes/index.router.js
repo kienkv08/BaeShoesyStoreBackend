@@ -5,6 +5,7 @@ import categoryRouter from './category.router.js';
 import orderRouter from './order.router.js';
 import paymentRouter from './payment.router.js';
 import productRouter from './product.router.js';
+import transRouter from './transaction.router.js';
 import userRouter from './user.router.js';
 
 const routes = (app) => {
@@ -16,6 +17,7 @@ const routes = (app) => {
   app.use('/users', userRouter);
   app.use('/payment', paymentRouter);
   app.use('/auctions', auctionHistoryRouter);
+  app.use('/transactions', transRouter);
 };
 
 export default routes;

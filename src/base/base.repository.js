@@ -56,13 +56,17 @@ class BaseRepository {
 
   async paginate(params) {
     const { pagination, populates, searchBy = [] } = params;
-    const { size, page, sortBy = 'createdAt', sortType = 'desc', text, isDelete, ...rest } = pagination;
+    const { size, page, sortBy = 'createdAt', sortType = 'desc', text, isDelete, now, ...rest } = pagination;
     const conditions = { ...rest };
 
     if (text && searchBy.length > 0) {
       conditions['$or'] = searchBy.map((key) =>
         !isNaN(Number(text)) ? { [key]: Number(text) } : { [key]: { $regex: new RegExp(text.toString(), 'i') } },
       );
+    }
+    if (now) {
+      conditions.timeStart = { $lte: now };
+      conditions.timeEnd = { $gte: now };
     }
     Object.keys(rest).length > 0 &&
       Object.keys(rest).forEach((key) => {
